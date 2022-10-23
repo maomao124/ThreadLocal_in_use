@@ -15,5 +15,34 @@ package mao;
 
 public class Test4
 {
+    public static void main(String[] args)
+    {
+        User user = new User().setId(12L).setName("张三");
+        User user2 = new User().setId(14L).setName("李四");
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                UserHolder.setUser(user);
 
+                System.out.println(UserHolder.getUser());
+
+                UserHolder.removeUser();
+            }
+        }).start();
+
+        new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                UserHolder.setUser(user2);
+
+                System.out.println(UserHolder.getUser());
+
+                UserHolder.removeUser();
+            }
+        }).start();
+    }
 }
